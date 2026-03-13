@@ -2,6 +2,7 @@
 
 Usage example::
 
+<<<<<<< HEAD
     # Test local connection
     python models/neo4j_query.py --test --mode local
 
@@ -26,6 +27,15 @@ Usage example::
     # export NEO4J_TRUST=all  # (use this to ignore cert verification errors)
     # python models/neo4j_query.py --query "..." --output ...
 
+=======
+    python models/neo4j_query.py \
+        --uri bolt://localhost:7687 \
+        --user neo4j \
+        --password secret \
+        --query "MATCH (u:Unit)-[:HAS_CONCEPT]->(c) RETURN u.kode AS kode, collect(c.text) AS concepts" \
+        --output data/knowledge_base/query_results.json
+
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b
 If the query produces multiple rows, each row becomes an element in the
 resulting JSON array.  Value objects are converted using the driver's
 `record.data()` method, which returns plain Python dicts and lists.
@@ -33,6 +43,7 @@ resulting JSON array.  Value objects are converted using the driver's
 
 import argparse
 import json
+<<<<<<< HEAD
 import os
 from neo4j import GraphDatabase
 from neo4j._conf import TrustAll, TrustCustomCAs, TrustSystemCAs
@@ -183,12 +194,21 @@ def test_connection(driver, session_kwargs):
 
 def run_query(driver, session_kwargs, cypher):
     with driver.session(**session_kwargs) as session:
+=======
+from neo4j import GraphDatabase
+
+
+def run_query(uri, user, password, cypher):
+    driver = GraphDatabase.driver(uri, auth=(user, password))
+    with driver.session() as session:
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b
         result = session.run(cypher)
         # each record can be turned into a dict via data()
         return [r.data() for r in result]
 
 
 def main():
+<<<<<<< HEAD
     # Load .env if present so users can keep Neo4j credentials in a file.
     env_loaded = load_env_file()
     if env_loaded:
@@ -249,10 +269,25 @@ def main():
         return 1
 
     rows = run_query(driver, session_kwargs, args.query)
+=======
+    parser = argparse.ArgumentParser(description="Run a Cypher query and dump the results.")
+    parser.add_argument("--uri", default="bolt://localhost:7687")
+    parser.add_argument("--user", default="neo4j")
+    parser.add_argument("--password", default="skkni_mentor")
+    parser.add_argument("--query", required=True, help="Cypher query to execute (wrap in quotes)")
+    parser.add_argument("--output", default="data/knowledge_base/query_results.json", help="path to write JSON output")
+    args = parser.parse_args()
+
+    rows = run_query(args.uri, args.user, args.password, args.query)
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(rows, f, ensure_ascii=False, indent=2)
     print(f"{len(rows)} row(s) written to {args.output}")
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     exit(main())
+=======
+    main()
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b

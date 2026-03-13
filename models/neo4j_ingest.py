@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 """Simple Neo4j ingestion helper for knowledge_base_fix.json.
+=======
+"""Simple Neo4j ingestion helper for knowledge_base.json.
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b
 
 Reads the file produced manually by the user and emits Cypher statements to
 create nodes and relations according to the chosen ontology:
@@ -17,6 +21,7 @@ Usage example:
     # install driver if needed
     pip install neo4j
 
+<<<<<<< HEAD
     # Test local connection
     python models/neo4j_ingest.py --test --mode local
 
@@ -36,6 +41,13 @@ Usage example:
     # export NEO4J_DATABASE=<database>
     # export NEO4J_TRUST=all  # (use this to ignore cert verification errors)
     # python models/neo4j_ingest.py --file data/knowledge_base/knowledge_base_fix.json
+=======
+    python models/neo4j_ingest.py \
+        --uri bolt://localhost:7687 \
+        --user neo4j \
+        --password secret \
+        --file data/knowledge_base/knowledge_base.json
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b
 
 If the database already contains nodes you may want to clear it first. The
 script accepts a ``--clear`` flag which will run ``MATCH (n) DETACH DELETE n``
@@ -43,10 +55,15 @@ before ingesting.
 """
 
 import json
+<<<<<<< HEAD
 import os
 import argparse
 from neo4j import GraphDatabase
 from neo4j._conf import TrustAll, TrustCustomCAs, TrustSystemCAs
+=======
+import argparse
+from neo4j import GraphDatabase
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b
 
 
 def load_kb(path):
@@ -54,6 +71,7 @@ def load_kb(path):
         return json.load(f)
 
 
+<<<<<<< HEAD
 def load_env_file(path=".env"):
     """Load environment variables from a .env file (if present).
 
@@ -199,6 +217,9 @@ def test_connection(driver, session_kwargs):
 
 def ingest(tx, kb):
 
+=======
+def ingest(tx, kb):
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b
     # iterate through unit list
     for u in kb.get("unit", []):
         kode = u.get("kode_unit") or u.get("kode") or ""
@@ -259,16 +280,20 @@ def ingest(tx, kb):
 
 
 def main():
+<<<<<<< HEAD
     # Load .env if present so users can keep Neo4j credentials in a file.
     env_loaded = load_env_file()
     if env_loaded:
         print("Loaded .env file")
 
+=======
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b
     parser = argparse.ArgumentParser(description="Ingest knowledge base JSON into Neo4j.")
     parser.add_argument("--uri", default="bolt://localhost:7687")
     parser.add_argument("--user", default="neo4j")
     parser.add_argument("--password", default="skkni_mentor")
     # input knowledge base JSON is now expected under data/knowledge_base
+<<<<<<< HEAD
     parser.add_argument("--file", default="../data/knowledge_base/knowledge_base_fix.json")
     parser.add_argument("--clear", action="store_true", help="clear the database before ingest")
     parser.add_argument("--test", action="store_true", help="test connection without ingesting data")
@@ -321,6 +346,19 @@ def main():
             session.run("MATCH (n) DETACH DELETE n")
             print("database cleared")
         session.execute_write(ingest, kb)
+=======
+    parser.add_argument("--file", default="../data/knowledge_base/knowledge_base.json")
+    parser.add_argument("--clear", action="store_true", help="clear the database before ingest")
+    args = parser.parse_args()
+
+    kb = load_kb(args.file)
+    driver = GraphDatabase.driver(args.uri, auth=(args.user, args.password))
+    with driver.session() as session:
+        if args.clear:
+            session.run("MATCH (n) DETACH DELETE n")
+            print("database cleared")
+        session.write_transaction(ingest, kb)
+>>>>>>> 93454fa00cfce8796a4a814231e2ee358eda111b
     print("ingestion complete")
 
 
