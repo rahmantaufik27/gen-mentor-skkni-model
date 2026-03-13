@@ -1,0 +1,1 @@
+# This module contains helper functions and utilities used across the project for common tasks like file handling and data processing.

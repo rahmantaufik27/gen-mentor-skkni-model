@@ -1,0 +1,1 @@
+# This module generates 10 multiple-choice questions (MCQs) per unit with distributed cognitive levels (C1–C6) based on tagged content.
