@@ -26,8 +26,8 @@ def call_llm_specific(model: str, prompt: str, timeout: int = 60) -> str:
         return ""
 
 # Load data from knowledge_base_fix.json
-kb_file = 'data/knowledge_base/knowledge_base_fix.json'
-bloom_file = 'data/knowledge_base/bloom.json'
+kb_file = '../data/knowledge_base/knowledge_base_fix.json'
+bloom_file = '../data/knowledge_base/bloom.json'
 
 if not os.path.exists(kb_file):
     print(f"❌ Error: {kb_file} not found.")
