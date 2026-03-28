@@ -7,3 +7,5 @@ pillow==11.3.0
 pycparser==2.23
 pypdfium2==5.5.0
 typing_extensions==4.15.0
+ragas
+langchain-community

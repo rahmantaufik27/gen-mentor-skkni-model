@@ -1,0 +1,14 @@
+[
+  {
+    "question": "Dalam sistem interaktif, bentuk interaksi yang memungkinkan pengguna memberikan input melalui bahasa alami seperti 'cari informasi tentang kota Jakarta' adalah contoh dari jenis interaksi apa?",
+    "options": [
+      "A. Command Language Interaction",
+      "B. Menu GUI Interaction",
+      "C. Natural Language Interaction",
+      "D. Object-based Interaction"
+    ],
+    "correct_answer": "C",
+    "bloom_level": "C3",
+    "unit": "INT101"
+  }
+]
