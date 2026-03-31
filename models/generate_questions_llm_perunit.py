@@ -117,9 +117,6 @@ def generate_questions():
         log_info(f"Generating {total_per_unit} questions for this unit")
         log_info(f"{'='*80}")
         
-        # Prepare unit context
-        konsep_text = "\n".join(unit['konsep']) if unit['konsep'] else "Konsep umum"
-        
         # Build bloom distribution details for prompt
         bloom_details = []
         for bloom_level in bloom_levels:
@@ -135,9 +132,6 @@ def generate_questions():
 
 UNIT: {unit_nama}
 UNIT CODE: {unit_kode}
-
-UNIT CONCEPTS:
-{konsep_text}
 
 BLOOM'S TAXONOMY DISTRIBUTION FOR THIS UNIT (Total: 10 questions):
 {bloom_details_str}
