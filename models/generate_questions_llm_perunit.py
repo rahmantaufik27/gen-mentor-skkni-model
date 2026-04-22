@@ -130,40 +130,41 @@ def generate_questions():
         # Create prompt for this unit
         prompt = f"""You are an expert item writer for software competency certification exams. Your task is to generate exactly 10 multiple-choice questions in Indonesian language for the following competency unit.
 
-UNIT: {unit_nama}
-UNIT CODE: {unit_kode}
+            UNIT: {unit_nama}
+            UNIT CODE: {unit_kode}
 
-BLOOM'S TAXONOMY DISTRIBUTION FOR THIS UNIT (Total: 10 questions):
-{bloom_details_str}
+            BLOOM'S TAXONOMY DISTRIBUTION FOR THIS UNIT (Total: 10 questions):
+            {bloom_details_str}
 
-GENERAL INSTRUCTIONS:
-1. Generate EXACTLY {total_per_unit} questions total for this unit, adhering strictly to the Bloom distribution above.
-2. Each question must be specifically relevant to this unit's concepts.
-3. Write clear, concise questions in Bahasa Indonesia.
-4. Each question must have exactly 4 answer choices (A, B, C, D).
-5. Only one correct answer per question.
-6. Distractors must be plausible and in the same category.
-7. Follow Bloom's Taxonomy levels:
-   - C1 (Remember): Recall facts and basic concepts
-   - C2 (Understand): Understand meaning and concepts
-   - C3 (Apply): Apply knowledge in new situations
-   - C4 (Analyze): Analyze relationships and structures
-   - C5 (Evaluate): Justify decisions and evaluate information
-   - C6 (Create): Create new solutions and designs
-8. Avoid ambiguity, double negatives, and compound questions.
-9. Do NOT include explanations, commentary, or any text outside JSON.
+            GENERAL INSTRUCTIONS:
+            1. Generate EXACTLY {total_per_unit} questions total for this unit, adhering strictly to the Bloom distribution above.
+            2. Each question must be specifically relevant to this unit's concepts.
+            3. Write clear, concise questions in Bahasa Indonesia.
+            4. Each question must have exactly 4 answer choices (A, B, C, D).
+            5. Only one correct answer per question.
+            6. Distractors must be plausible and in the same category.
+            7. Follow Bloom's Taxonomy levels:
+            - C1 (Remember): Recall facts and basic concepts
+            - C2 (Understand): Understand meaning and concepts
+            - C3 (Apply): Apply knowledge in new situations
+            - C4 (Analyze): Analyze relationships and structures
+            - C5 (Evaluate): Justify decisions and evaluate information
+            - C6 (Create): Create new solutions and designs
+            8. Avoid ambiguity, double negatives, and compound questions.
+            9. Do NOT include explanations, commentary, or any text outside JSON.
 
-OUTPUT FORMAT:
-Return a JSON ARRAY containing exactly {total_per_unit} objects with this structure:
-{{
-  "question": "...",
-  "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
-  "correct_answer": "A",
-  "bloom_level": "C1-C6",
-  "unit": "{unit_kode}"
-}}
+            OUTPUT FORMAT:
+            Return a JSON ARRAY containing exactly {total_per_unit} objects with this structure:
+            {{
+            "question": "...",
+            "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+            "correct_answer": "A",
+            "bloom_level": "C1-C6",
+            "unit": "{unit_kode}"
+            }}
 
-IMPORTANT: Output ONLY the JSON array, nothing else. Start with [ and end with ]."""
+            IMPORTANT: Output ONLY the JSON array, nothing else. Start with [ and end with ].
+        """
 
         log_info(f"Calling Ollama for unit {unit_idx}...")
         response = call_llm_specific(model_name, prompt, timeout=120)

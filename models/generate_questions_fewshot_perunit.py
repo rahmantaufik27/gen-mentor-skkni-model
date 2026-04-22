@@ -142,22 +142,23 @@ for unit_idx, unit in enumerate(kb['unit'], 1):
             # FEW-SHOT Prompt: Include example question from unit
             prompt = f"""Unit: {unit_nama} ({unit_kode})
 
-Konteks Konsep dari Unit ini:
-{konsep}
+                Konteks Konsep dari Unit ini:
+                {konsep}
 
-Contoh Soal Bloom {bloom_level} dari Unit yang sama:
-{contoh_soal}
-Pilihan: {contoh_pilihan}
-Jawaban: {contoh_jawaban}
+                Contoh Soal Bloom {bloom_level} dari Unit yang sama:
+                {contoh_soal}
+                Pilihan: {contoh_pilihan}
+                Jawaban: {contoh_jawaban}
 
-Instruksi:
-Generate 1 soal pilihan ganda BARU DAN UNIK (jangan sama dengan contoh, gunakan variasi lain) untuk Bloom level {bloom_level}.
-- Soal harus relevan dengan konsep di unit ini
-- Tingkat kesulitan: {", ".join(bloom_keywords[bloom_level][:3])}
-- Format jawaban: JSON
+                Instruksi:
+                Generate 1 soal pilihan ganda BARU DAN UNIK (jangan sama dengan contoh, gunakan variasi lain) untuk Bloom level {bloom_level}.
+                - Soal harus relevan dengan konsep di unit ini
+                - Tingkat kesulitan: {", ".join(bloom_keywords[bloom_level][:3])}
+                - Format jawaban: JSON
 
-Format output (HANYA JSON, tanpa teks lain):
-{{"question": "...", "options": ["A. ...", "B. ...", "C. ...", "D. ..."], "correct_answer": "A", "bloom_level": "{bloom_level}", "unit": "{unit_kode}"}}"""
+                Format output (HANYA JSON, tanpa teks lain):
+                {{"question": "...", "options": ["A. ...", "B. ...", "C. ...", "D. ..."], "correct_answer": "A", "bloom_level": "{bloom_level}", "unit": "{unit_kode}"}}
+            """
 
             # Call Ollama
             log_info(f"  [{question_num}/{total_per_unit}] Generating {bloom_level} question...")
